@@ -18,7 +18,7 @@ use namespace::clean;
 use MouseX::Types
     -declare => [qw(DateTime Duration TimeZone Locale)]; # export Types
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 class_type 'DateTime'           => { class => 'DateTime' };
 class_type 'DateTime::Duration' => { class => 'DateTime::Duration' };
