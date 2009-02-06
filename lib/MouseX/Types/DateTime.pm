@@ -11,13 +11,12 @@ use DateTime::Locale::root ();
 use DateTimeX::Easy ();
 use Time::Duration::Parse qw(parse_duration);
 use Scalar::Util qw(looks_like_number);
-use Mouse::TypeRegistry;
+use Mouse::Util::TypeConstraints;
 use MouseX::Types::Mouse qw(Str HashRef);
 use namespace::clean;
 
 use MouseX::Types
     -declare => [qw(DateTime Duration TimeZone Locale)]; # export Types
-require Mouse; # for Mouse::TypeRegistry (Mouse::load_class)
 
 our $VERSION = '0.01';
 
