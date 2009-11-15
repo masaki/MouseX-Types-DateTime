@@ -1,0 +1,126 @@
+# NAME
+
+MouseX::Types::DateTime - A DateTime type library for Mouse
+
+# SYNOPSIS
+
+## CLASS TYPES
+
+    package MyApp;
+    use Mouse;
+    use MouseX::Types::DateTime;
+
+    has 'datetime' => (
+        is     => 'rw',
+        isa    => 'DateTime',
+        coerce => 1,
+    );
+
+    has 'duration' => (
+        is     => 'rw',
+        isa    => 'DateTime::Duration',
+        coerce => 1,
+    );
+
+    has 'timezone' => (
+        is     => 'rw',
+        isa    => 'DateTime::TimeZone',
+        coerce => 1,
+    );
+
+    has 'locale' => (
+        is     => 'rw',
+        isa    => 'DateTime::Locale',
+        coerce => 1,
+    );
+
+## CUSTOM TYPES
+
+    package MyApp;
+    use Mouse;
+    use MouseX::Types::DateTime qw(DateTime Duration TimeZone Locale);
+
+    has 'datetime' => (
+        is     => 'rw',
+        isa    => DateTime,
+        coerce => 1,
+    );
+
+    has 'duration' => (
+        is     => 'rw',
+        isa    => Duration,
+        coerce => 1,
+    );
+
+    has 'timezone' => (
+        is     => 'rw',
+        isa    => TimeZone,
+        coerce => 1,
+    );
+
+    has 'locale' => (
+        is     => 'rw',
+        isa    => Locale,
+        coerce => 1,
+    );
+
+# DESCRIPTION
+
+MouseX::Types::DateTime creates common [Mouse](http://search.cpan.org/search?mode=module&query=Mouse) types and coercions
+for dealing with [DateTime](http://search.cpan.org/search?mode=module&query=DateTime) objects as [Mouse](http://search.cpan.org/search?mode=module&query=Mouse) attributes.
+
+Coercions (see [Mouse::TypeRegistry](http://search.cpan.org/search?mode=module&query=Mouse::TypeRegistry)) are made from
+`Str` and `HashRef` to [DateTime](http://search.cpan.org/search?mode=module&query=DateTime), [DateTime::Duration](http://search.cpan.org/search?mode=module&query=DateTime::Duration),
+[DateTime::TimeZone](http://search.cpan.org/search?mode=module&query=DateTime::TimeZone) and [DateTime::Locale](http://search.cpan.org/search?mode=module&query=DateTime::Locale) objects.
+
+# TYPES
+
+## DateTime
+
+A [DateTime](http://search.cpan.org/search?mode=module&query=DateTime) class type.
+
+Coerces from `Str` via L<DateTime/from_epoch> or L<DateTimeX::Easy/new>.
+
+Coerces from `HashRef` via L<DateTime/new>.
+
+## Duration
+
+A [DateTime::Duration](http://search.cpan.org/search?mode=module&query=DateTime::Duration) class type.
+
+Coerces from `Str` via L<Time::Duration::Parse/parse_duration>
+and L<DateTime::Duration/new>.
+
+Coerces from `HashRef` via L<DateTime::Duration/new>.
+
+## TimeZone
+
+A [DateTime::TimeZone](http://search.cpan.org/search?mode=module&query=DateTime::TimeZone) class type.
+
+Coerces from `Str` via L<DateTime::TimeZone/new>.
+
+## Locale
+
+A [DateTime::Locale](http://search.cpan.org/search?mode=module&query=DateTime::Locale) (see [DateTime::Locale::root](http://search.cpan.org/search?mode=module&query=DateTime::Locale::root)) class type.
+
+Coerces from `Str` via L<DateTime::Locale/load>.
+
+# AUTHOR
+
+NAKAGAWA Masaki <masaki@cpan.org>
+
+# THANKS TO
+
+Yuval Kogman, John Napiorkowski, L<MooseX::Types::DateTime/AUTHOR>
+
+# LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+# SEE ALSO
+
+[Mouse](http://search.cpan.org/search?mode=module&query=Mouse), [Mouse::TypeRegistry](http://search.cpan.org/search?mode=module&query=Mouse::TypeRegistry),
+
+[DateTime](http://search.cpan.org/search?mode=module&query=DateTime), [DateTimeX::Easy](http://search.cpan.org/search?mode=module&query=DateTimeX::Easy),
+
+[MooseX::Types::DateTime](http://search.cpan.org/search?mode=module&query=MooseX::Types::DateTime), [MooseX::Types::DateTimeX](http://search.cpan.org/search?mode=module&query=MooseX::Types::DateTimeX)

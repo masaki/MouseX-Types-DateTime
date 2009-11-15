@@ -1,27 +1,114 @@
-This is Perl module MouseX::Types::DateTime.
+NAME
+    MouseX::Types::DateTime - A DateTime type library for Mouse
 
-INSTALLATION
+SYNOPSIS
+  CLASS TYPES
+        package MyApp;
+        use Mouse;
+        use MouseX::Types::DateTime;
 
-MouseX::Types::DateTime installation is straightforward. If your CPAN shell is set up,
-you should just be able to do
+        has 'datetime' => (
+            is     => 'rw',
+            isa    => 'DateTime',
+            coerce => 1,
+        );
 
-    % cpan MouseX::Types::DateTime
+        has 'duration' => (
+            is     => 'rw',
+            isa    => 'DateTime::Duration',
+            coerce => 1,
+        );
 
-Download it, unpack it, then build it as per the usual:
+        has 'timezone' => (
+            is     => 'rw',
+            isa    => 'DateTime::TimeZone',
+            coerce => 1,
+        );
 
-    % perl Makefile.PL
-    % make && make test
+        has 'locale' => (
+            is     => 'rw',
+            isa    => 'DateTime::Locale',
+            coerce => 1,
+        );
 
-Then install it:
+  CUSTOM TYPES
+        package MyApp;
+        use Mouse;
+        use MouseX::Types::DateTime qw(DateTime Duration TimeZone Locale);
 
-    % make install
+        has 'datetime' => (
+            is     => 'rw',
+            isa    => DateTime,
+            coerce => 1,
+        );
 
-DOCUMENTATION
+        has 'duration' => (
+            is     => 'rw',
+            isa    => Duration,
+            coerce => 1,
+        );
 
-MouseX::Types::DateTime documentation is available as in POD. So you can do:
+        has 'timezone' => (
+            is     => 'rw',
+            isa    => TimeZone,
+            coerce => 1,
+        );
 
-    % perldoc MouseX::Types::DateTime
+        has 'locale' => (
+            is     => 'rw',
+            isa    => Locale,
+            coerce => 1,
+        );
 
-to read the documentation online with your favorite pager.
+DESCRIPTION
+    MouseX::Types::DateTime creates common Mouse types and coercions for
+    dealing with DateTime objects as Mouse attributes.
 
-NAKAGAWA Masaki
+    Coercions (see Mouse::TypeRegistry) are made from "Str" and "HashRef" to
+    DateTime, DateTime::Duration, DateTime::TimeZone and DateTime::Locale
+    objects.
+
+TYPES
+  DateTime
+        A DateTime class type.
+
+        Coerces from "Str" via "from_epoch" in DateTime or "new" in
+        DateTimeX::Easy.
+
+        Coerces from "HashRef" via "new" in DateTime.
+
+  Duration
+        A DateTime::Duration class type.
+
+        Coerces from "Str" via "parse_duration" in Time::Duration::Parse and
+        "new" in DateTime::Duration.
+
+        Coerces from "HashRef" via "new" in DateTime::Duration.
+
+  TimeZone
+        A DateTime::TimeZone class type.
+
+        Coerces from "Str" via "new" in DateTime::TimeZone.
+
+  Locale
+        A DateTime::Locale (see DateTime::Locale::root) class type.
+
+        Coerces from "Str" via "load" in DateTime::Locale.
+
+AUTHOR
+    NAKAGAWA Masaki <masaki@cpan.org>
+
+THANKS TO
+    Yuval Kogman, John Napiorkowski, "AUTHOR" in MooseX::Types::DateTime
+
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
+    Mouse, Mouse::TypeRegistry,
+
+    DateTime, DateTimeX::Easy,
+
+    MooseX::Types::DateTime, MooseX::Types::DateTimeX
+

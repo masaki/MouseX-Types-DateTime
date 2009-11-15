@@ -2,6 +2,9 @@ use inc::Module::Install;
 name 'MouseX-Types-DateTime';
 all_from 'lib/MouseX/Types/DateTime.pm';
 
+readme_from 'lib/MouseX/Types/DateTime.pm';
+readme_markdown_from 'lib/MouseX/Types/DateTime.pm';
+
 requires 'Mouse' => '0.15';
 requires 'MouseX::Types' => '0.01';
 requires 'Scalar::Util';
