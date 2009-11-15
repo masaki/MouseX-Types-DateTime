@@ -69,7 +69,7 @@ MouseX::Types::DateTime - A DateTime type library for Mouse
 MouseX::Types::DateTime creates common [Mouse](http://search.cpan.org/search?mode=module&query=Mouse) types and coercions
 for dealing with [DateTime](http://search.cpan.org/search?mode=module&query=DateTime) objects as [Mouse](http://search.cpan.org/search?mode=module&query=Mouse) attributes.
 
-Coercions (see [Mouse::TypeRegistry](http://search.cpan.org/search?mode=module&query=Mouse::TypeRegistry)) are made from
+Coercions (see [Mouse::Util::TypeConstraints](http://search.cpan.org/search?mode=module&query=Mouse::Util::TypeConstraints)) are made from
 `Str` and `HashRef` to [DateTime](http://search.cpan.org/search?mode=module&query=DateTime), [DateTime::Duration](http://search.cpan.org/search?mode=module&query=DateTime::Duration),
 [DateTime::TimeZone](http://search.cpan.org/search?mode=module&query=DateTime::TimeZone) and [DateTime::Locale](http://search.cpan.org/search?mode=module&query=DateTime::Locale) objects.
 
@@ -79,7 +79,7 @@ Coercions (see [Mouse::TypeRegistry](http://search.cpan.org/search?mode=module&q
 
 A [DateTime](http://search.cpan.org/search?mode=module&query=DateTime) class type.
 
-Coerces from `Str` via L<DateTime/from_epoch> or L<DateTimeX::Easy/new>.
+Coerces from `Num` via L<DateTime/from_epoch>.
 
 Coerces from `HashRef` via L<DateTime/new>.
 
@@ -87,8 +87,7 @@ Coerces from `HashRef` via L<DateTime/new>.
 
 A [DateTime::Duration](http://search.cpan.org/search?mode=module&query=DateTime::Duration) class type.
 
-Coerces from `Str` via L<Time::Duration::Parse/parse_duration>
-and L<DateTime::Duration/new>.
+Coerces from `Num` via L<DateTime::Duration/new>.
 
 Coerces from `HashRef` via L<DateTime::Duration/new>.
 
@@ -103,6 +102,9 @@ Coerces from `Str` via L<DateTime::TimeZone/new>.
 A [DateTime::Locale](http://search.cpan.org/search?mode=module&query=DateTime::Locale) (see [DateTime::Locale::root](http://search.cpan.org/search?mode=module&query=DateTime::Locale::root)) class type.
 
 Coerces from `Str` via L<DateTime::Locale/load>.
+
+Coerces from [Locale::Maketext](http://search.cpan.org/search?mode=module&query=Locale::Maketext) via L<DateTime::Locale/load>
+using L<Locale::Maketext/language_tag>.
 
 # AUTHOR
 
@@ -119,8 +121,8 @@ it under the same terms as Perl itself.
 
 # SEE ALSO
 
-[Mouse](http://search.cpan.org/search?mode=module&query=Mouse), [Mouse::TypeRegistry](http://search.cpan.org/search?mode=module&query=Mouse::TypeRegistry),
+[Mouse](http://search.cpan.org/search?mode=module&query=Mouse), [Mouse::Util::TypeConstraints](http://search.cpan.org/search?mode=module&query=Mouse::Util::TypeConstraints),
 
-[DateTime](http://search.cpan.org/search?mode=module&query=DateTime), [DateTimeX::Easy](http://search.cpan.org/search?mode=module&query=DateTimeX::Easy),
+[DateTime](http://search.cpan.org/search?mode=module&query=DateTime), [DateTime::Duration](http://search.cpan.org/search?mode=module&query=DateTime::Duration), [DateTime::Locale](http://search.cpan.org/search?mode=module&query=DateTime::Locale), [DateTime::TimeZone](http://search.cpan.org/search?mode=module&query=DateTime::TimeZone),
 
-[MooseX::Types::DateTime](http://search.cpan.org/search?mode=module&query=MooseX::Types::DateTime), [MooseX::Types::DateTimeX](http://search.cpan.org/search?mode=module&query=MooseX::Types::DateTimeX)
+[MooseX::Types::DateTime](http://search.cpan.org/search?mode=module&query=MooseX::Types::DateTime)

@@ -140,7 +140,7 @@ MouseX::Types::DateTime - A DateTime type library for Mouse
 MouseX::Types::DateTime creates common L<Mouse> types and coercions
 for dealing with L<DateTime> objects as L<Mouse> attributes.
 
-Coercions (see L<Mouse::TypeRegistry>) are made from
+Coercions (see L<Mouse::Util::TypeConstraints>) are made from
 C<Str> and C<HashRef> to L<DateTime>, L<DateTime::Duration>,
 L<DateTime::TimeZone> and L<DateTime::Locale> objects.
 
@@ -152,7 +152,7 @@ L<DateTime::TimeZone> and L<DateTime::Locale> objects.
 
 A L<DateTime> class type.
 
-Coerces from C<Str> via L<DateTime/from_epoch> or L<DateTimeX::Easy/new>.
+Coerces from C<Num> via L<DateTime/from_epoch>.
 
 Coerces from C<HashRef> via L<DateTime/new>.
 
@@ -164,8 +164,7 @@ Coerces from C<HashRef> via L<DateTime/new>.
 
 A L<DateTime::Duration> class type.
 
-Coerces from C<Str> via L<Time::Duration::Parse/parse_duration>
-and L<DateTime::Duration/new>.
+Coerces from C<Num> via L<DateTime::Duration/new>.
 
 Coerces from C<HashRef> via L<DateTime::Duration/new>.
 
@@ -189,6 +188,9 @@ A L<DateTime::Locale> (see L<DateTime::Locale::root>) class type.
 
 Coerces from C<Str> via L<DateTime::Locale/load>.
 
+Coerces from L<Locale::Maketext> via L<DateTime::Locale/load>
+using L<Locale::Maketext/language_tag>.
+
 =back
 
 =head1 AUTHOR
@@ -206,10 +208,10 @@ it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-L<Mouse>, L<Mouse::TypeRegistry>,
+L<Mouse>, L<Mouse::Util::TypeConstraints>,
 
-L<DateTime>, L<DateTimeX::Easy>,
+L<DateTime>, L<DateTime::Duration>, L<DateTime::Locale>, L<DateTime::TimeZone>,
 
-L<MooseX::Types::DateTime>, L<MooseX::Types::DateTimeX>
+L<MooseX::Types::DateTime>
 
 =cut

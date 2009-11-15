@@ -64,24 +64,22 @@ DESCRIPTION
     MouseX::Types::DateTime creates common Mouse types and coercions for
     dealing with DateTime objects as Mouse attributes.
 
-    Coercions (see Mouse::TypeRegistry) are made from "Str" and "HashRef" to
-    DateTime, DateTime::Duration, DateTime::TimeZone and DateTime::Locale
-    objects.
+    Coercions (see Mouse::Util::TypeConstraints) are made from "Str" and
+    "HashRef" to DateTime, DateTime::Duration, DateTime::TimeZone and
+    DateTime::Locale objects.
 
 TYPES
   DateTime
         A DateTime class type.
 
-        Coerces from "Str" via "from_epoch" in DateTime or "new" in
-        DateTimeX::Easy.
+        Coerces from "Num" via "from_epoch" in DateTime.
 
         Coerces from "HashRef" via "new" in DateTime.
 
   Duration
         A DateTime::Duration class type.
 
-        Coerces from "Str" via "parse_duration" in Time::Duration::Parse and
-        "new" in DateTime::Duration.
+        Coerces from "Num" via "new" in DateTime::Duration.
 
         Coerces from "HashRef" via "new" in DateTime::Duration.
 
@@ -95,6 +93,9 @@ TYPES
 
         Coerces from "Str" via "load" in DateTime::Locale.
 
+        Coerces from Locale::Maketext via "load" in DateTime::Locale using
+        "language_tag" in Locale::Maketext.
+
 AUTHOR
     NAKAGAWA Masaki <masaki@cpan.org>
 
@@ -106,9 +107,9 @@ LICENSE
     under the same terms as Perl itself.
 
 SEE ALSO
-    Mouse, Mouse::TypeRegistry,
+    Mouse, Mouse::Util::TypeConstraints,
 
-    DateTime, DateTimeX::Easy,
+    DateTime, DateTime::Duration, DateTime::Locale, DateTime::TimeZone,
 
-    MooseX::Types::DateTime, MooseX::Types::DateTimeX
+    MooseX::Types::DateTime
 
