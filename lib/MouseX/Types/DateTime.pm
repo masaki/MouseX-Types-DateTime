@@ -1,63 +1,70 @@
 package MouseX::Types::DateTime;
 
+use 5.008_001;
 use strict;
 use warnings;
-use 5.8.1;
+use Scalar::Util ();
 use DateTime ();
 use DateTime::Duration ();
 use DateTime::TimeZone ();
 use DateTime::Locale ();
 use DateTime::Locale::root ();
-use DateTimeX::Easy ();
-use Time::Duration::Parse qw(parse_duration);
-use Scalar::Util qw(looks_like_number);
 use Mouse::Util::TypeConstraints;
-use MouseX::Types::Mouse qw(Str HashRef);
-use namespace::clean;
-
-use MouseX::Types
-    -declare => [qw(DateTime Duration TimeZone Locale)]; # export Types
+use MouseX::Types -declare => [qw(DateTime Duration TimeZone Locale Now)]; # export Types
+use MouseX::Types::Mouse qw(Num Str HashRef);
 
 our $VERSION = '0.02';
 
-class_type 'DateTime'           => { class => 'DateTime' };
-class_type 'DateTime::Duration' => { class => 'DateTime::Duration' };
-class_type 'DateTime::TimeZone' => { class => 'DateTime::TimeZone' };
-class_type 'DateTime::Locale'   => { class => 'DateTime::Locale::root' };
+class_type 'DateTime';
+class_type 'DateTime::Duration';
+class_type 'DateTime::TimeZone';
+
+type('DateTime::Locale',
+    type         => 'Class',
+    optimized_as => sub { Scalar::Util::blessed($_[0]) and $_[0]->isa('DateTime::Locale::root') },
+);
 
 subtype DateTime, as 'DateTime';
 subtype Duration, as 'DateTime::Duration';
 subtype TimeZone, as 'DateTime::TimeZone';
 subtype Locale,   as 'DateTime::Locale';
 
+subtype(Now,
+    as Str,
+    where { $_[0] eq 'now' },
+    optimize_as {
+        no warnings 'uninitialized';
+        not ref($_[0]) and $_[0] eq 'now';
+    },
+);
+
 for my $type ( 'DateTime', DateTime ) {
-    coerce $type,
-        from Str, via {
-            looks_like_number($_)
-                ? 'DateTime'->from_epoch(epoch => $_)
-                : DateTimeX::Easy->new($_);
-        },
-        from HashRef, via { 'DateTime'->new(%$_) };
+    coerce($type,
+        from Num,     via { 'DateTime'->from_epoch(epoch => $_[0]) },
+        from HashRef, via { 'DateTime'->new(%{$_[0]}) },
+        from Now,     via { 'DateTime'->now },
+    );
 }
 
 for my $type ( 'DateTime::Duration', Duration ) {
-    coerce $type,
-        from Str, via {
-            DateTime::Duration->new(
-                seconds => looks_like_number($_) ? $_ : parse_duration($_)
-            );
-        },
-        from HashRef, via { DateTime::Duration->new(%$_) };
+    coerce($type,
+        from Num,     via { DateTime::Duration->new(seconds => $_[0]) },
+        from HashRef, via { DateTime::Duration->new(%{$_[0]}) },
+    );
 }
 
 for my $type ( 'DateTime::TimeZone', TimeZone ) {
-    coerce $type,
-        from Str, via { DateTime::TimeZone->new(name => $_) };
+    coerce($type,
+        from Str, via { DateTime::TimeZone->new(name => $_[0]) },
+    );
 }
 
+my $locale = Mouse::Util::TypeConstraints::find_or_create_isa_type_constraint('Locale::Maketext');
 for my $type ( 'DateTime::Locale', Locale ) {
-    coerce $type,
-        from Str, via { DateTime::Locale->load($_) };
+    coerce($type,
+        from $locale, via { DateTime::Locale->load($_[0]->language_tag) },
+        from Str,     via { DateTime::Locale->load($_[0]) },
+    );
 }
 
 1;

@@ -6,16 +6,12 @@ readme_from 'lib/MouseX/Types/DateTime.pm';
 readme_markdown_from 'lib/MouseX/Types/DateTime.pm';
 auto_set_repository;
 
-requires 'Mouse' => '0.15';
-requires 'MouseX::Types' => '0.01';
-requires 'Scalar::Util';
-requires 'namespace::clean';
+requires 'Mouse' => '0.40';
+requires 'MouseX::Types' => '0.02';
+requires 'Scalar::Util' => '1.14';
 requires 'DateTime';
-requires 'DateTime::Duration';
 requires 'DateTime::TimeZone';
 requires 'DateTime::Locale';
-requires 'DateTimeX::Easy';
-requires 'Time::Duration::Parse';
 
 tests 't/*.t';
 test_requires 'Test::More' => '0.94';
